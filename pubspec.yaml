@@ -1,11 +1,19 @@
 name: mobkit_dashed_border
-description: A new Flutter package project.
+description: Custom border implementation for dashed lines border.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Biscozum/mobkit_dashed_border
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
   flutter: ">=1.17.0"
+
+platform:
+  android:
+  ios: 
+  linux: 
+  macos: 
+  web: 
+  windows:
 
 dependencies:
   flutter:
