@@ -38,7 +38,7 @@ Container(
 ```
 Output of this code:
 
-<img src="images/type1.png" alt="selectionScroll" />
+<img src="https://raw.githubusercontent.com/Biscozum/mobkit_dashed_border/main/images/type1.png" alt="selectionScroll" />
 
 #### This sample shows border that has same color ,width and radius corner
 Sample code:
@@ -58,7 +58,7 @@ Container(
 ```
 Output of this code:
 
-<img src="images/type2.png" alt="selectionScroll" />
+<img src="https://raw.githubusercontent.com/Biscozum/mobkit_dashed_border/main/images/type2.png" alt="selectionScroll" />
 
 
 #### This sample shows border that has different color ,width and radius corner
@@ -90,7 +90,7 @@ Container(
 ```
 Output of this code:
 
-<img src="images/type3.png" alt="selectionScroll" />
+<img src="https://raw.githubusercontent.com/Biscozum/mobkit_dashed_border/main/images/type3.png" alt="selectionScroll" />
 
 
 
