@@ -1,6 +1,6 @@
 name: mobkit_dashed_border
-description: Custom border implementation for dashed lines border.
-version: 0.0.2
+description: Custom border implementation for dashed lines and curves border.
+version: 0.0.3
 homepage: https://github.com/Biscozum/mobkit_dashed_border
 
 environment:
@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 platforms:
-  android:
+  android:  
   ios: 
   linux: 
   macos: 

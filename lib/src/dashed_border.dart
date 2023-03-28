@@ -31,7 +31,7 @@ class DashedBorder extends Border {
     Color color = const Color(0xFF000000),
     double width = 1.0,
     BorderStyle style = BorderStyle.solid,
-    StrokeAlign strokeAlign = StrokeAlign.inside,
+    dynamic strokeAlign = BorderSide.strokeAlignInside,
     required double dashLength,
   }) {
     final BorderSide side = BorderSide(color: color, width: width, style: style, strokeAlign: strokeAlign);
