@@ -1,6 +1,6 @@
 name: mobkit_dashed_border
 description: Custom border implementation for dashed lines and curves border.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/Biscozum/mobkit_dashed_border
 
 environment:
