@@ -10,6 +10,6 @@
 
 * Flutter version update for 3.7.7.
 
-## 0.0.3
+## 0.0.4
 
 * Flutter format update.
