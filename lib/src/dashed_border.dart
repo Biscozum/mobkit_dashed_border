@@ -24,7 +24,11 @@ class DashedBorder extends Border {
     BorderSide vertical = BorderSide.none,
     BorderSide horizontal = BorderSide.none,
     required this.dashLength,
-  }) : super(bottom: horizontal, top: horizontal, left: vertical, right: vertical);
+  }) : super(
+            bottom: horizontal,
+            top: horizontal,
+            left: vertical,
+            right: vertical);
 
   /// You can define sides property for all sides.
   factory DashedBorder.all({
@@ -34,7 +38,8 @@ class DashedBorder extends Border {
     dynamic strokeAlign = BorderSide.strokeAlignInside,
     required double dashLength,
   }) {
-    final BorderSide side = BorderSide(color: color, width: width, style: style, strokeAlign: strokeAlign);
+    final BorderSide side = BorderSide(
+        color: color, width: width, style: style, strokeAlign: strokeAlign);
     return DashedBorder.fromBorderSide(side: side, dashLength: dashLength);
   }
 
@@ -72,20 +77,27 @@ class DashedBorder extends Border {
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var topSpacing = (topWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var topSpacing =
+        (topWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
     double distance = 0;
 
     while (distance < (topWidth)) {
       double target = 0;
       double diff = 0;
       if (distance == (0)) {
-        diff = distance + dashLength / 2 <= (topWidth) ? dashLength / 2 : (topWidth) - distance;
+        diff = distance + dashLength / 2 <= (topWidth)
+            ? dashLength / 2
+            : (topWidth) - distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= (topWidth) ? dashLength : (topWidth) - distance;
+        diff = distance + dashLength <= (topWidth)
+            ? dashLength
+            : (topWidth) - distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), top.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          top.toPaint());
       distance = target + topSpacing;
     }
     //endregion
@@ -95,24 +107,29 @@ class DashedBorder extends Border {
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var rightSpacing = (rightHeight - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var rightSpacing =
+        (rightHeight - (partNumber / 2 * dashLength)) / (partNumber / 2);
     distance = (topWidth);
 
     while (distance < (metric.length - bottomWidth - leftHeight)) {
       double target = 0;
       double diff = 0;
       if (distance == (topWidth)) {
-        diff = distance + dashLength / 2 <= (metric.length - bottomWidth - leftHeight)
+        diff = distance + dashLength / 2 <=
+                (metric.length - bottomWidth - leftHeight)
             ? dashLength / 2
             : (metric.length - bottomWidth - leftHeight) - distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= (metric.length - bottomWidth - leftHeight)
-            ? dashLength
-            : (metric.length - bottomWidth - leftHeight) - distance;
+        diff =
+            distance + dashLength <= (metric.length - bottomWidth - leftHeight)
+                ? dashLength
+                : (metric.length - bottomWidth - leftHeight) - distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), right.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          right.toPaint());
       distance = target + rightSpacing;
     }
     //endregion
@@ -122,7 +139,8 @@ class DashedBorder extends Border {
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var bottomSpacing = (bottomWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var bottomSpacing =
+        (bottomWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
     distance = (metric.length - bottomWidth - leftHeight);
 
     while (distance < metric.length - leftHeight) {
@@ -134,10 +152,14 @@ class DashedBorder extends Border {
             : metric.length - leftHeight - distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= metric.length - leftHeight ? dashLength : metric.length - leftHeight - distance;
+        diff = distance + dashLength <= metric.length - leftHeight
+            ? dashLength
+            : metric.length - leftHeight - distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), bottom.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          bottom.toPaint());
       distance = target + bottomSpacing;
     }
     //endregion
@@ -147,22 +169,27 @@ class DashedBorder extends Border {
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var leftSpacing = ((leftHeight) - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var leftSpacing =
+        ((leftHeight) - (partNumber / 2 * dashLength)) / (partNumber / 2);
     distance = metric.length - leftHeight;
     while (distance < metric.length) {
       double target = 0;
       double diff = 0;
       if (distance == metric.length - leftHeight) {
-        diff = distance + dashLength / 2 <= metric.length ? dashLength / 2 : (metric.length) - distance;
+        diff = distance + dashLength / 2 <= metric.length
+            ? dashLength / 2
+            : (metric.length) - distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= metric.length ? dashLength : (metric.length) - distance;
+        diff = distance + dashLength <= metric.length
+            ? dashLength
+            : (metric.length) - distance;
         target = distance + diff;
       }
 
       canvas.drawPath(
-          metric.extractPath(
-              distance % metric.length, target == metric.length ? metric.length : target % metric.length),
+          metric.extractPath(distance % metric.length,
+              target == metric.length ? metric.length : target % metric.length),
           left.toPaint());
       distance = target + leftSpacing;
     }
@@ -171,7 +198,8 @@ class DashedBorder extends Border {
 
   /// This method will work and draw for borders whose corner is radius.
   /// It will draw centered by calculating the corner points.
-  _drawRadiusPath(Canvas canvas, Path source, Rect rect, BorderRadius? borderRadius) {
+  _drawRadiusPath(
+      Canvas canvas, Path source, Rect rect, BorderRadius? borderRadius) {
     var metric = source.computeMetrics().first;
     var leftHeight = rect.height;
     var rightHeight = rect.height;
@@ -192,32 +220,54 @@ class DashedBorder extends Border {
       var tempRadius = BorderRadius.only(bottomLeft: borderRadius.bottomLeft);
       var tempPath = Path()..addRRect(tempRadius.toRRect(rect));
       bottomLeftCorner = tempPath.computeMetrics().first.length -
-          (leftHeight + borderRadius.topLeft.y + bottomWidth + borderRadius.bottomRight.x + rect.height + rect.width);
+          (leftHeight +
+              borderRadius.topLeft.y +
+              bottomWidth +
+              borderRadius.bottomRight.x +
+              rect.height +
+              rect.width);
 
       tempRadius = BorderRadius.only(topLeft: borderRadius.topLeft);
       tempPath = Path()..addRRect(tempRadius.toRRect(rect));
       topLeftCorner = tempPath.computeMetrics().first.length -
-          (leftHeight + borderRadius.bottomLeft.y + topWidth + borderRadius.topRight.x + rect.height + rect.width);
+          (leftHeight +
+              borderRadius.bottomLeft.y +
+              topWidth +
+              borderRadius.topRight.x +
+              rect.height +
+              rect.width);
 
       tempRadius = BorderRadius.only(topRight: borderRadius.topRight);
       tempPath = Path()..addRRect(tempRadius.toRRect(rect));
       topRightCorner = tempPath.computeMetrics().first.length -
-          (topWidth + borderRadius.topLeft.x + rightHeight + borderRadius.bottomRight.y + rect.height + rect.width);
+          (topWidth +
+              borderRadius.topLeft.x +
+              rightHeight +
+              borderRadius.bottomRight.y +
+              rect.height +
+              rect.width);
 
       tempRadius = BorderRadius.only(bottomRight: borderRadius.bottomRight);
       tempPath = Path()..addRRect(tempRadius.toRRect(rect));
       bottomRightCorner = tempPath.computeMetrics().first.length -
-          (bottomWidth + borderRadius.bottomLeft.x + rightHeight + borderRadius.topRight.y + rect.height + rect.width);
+          (bottomWidth +
+              borderRadius.bottomLeft.x +
+              rightHeight +
+              borderRadius.topRight.y +
+              rect.height +
+              rect.width);
     }
     //endregion
 
     //region calculate spacing and draw left border
-    int partNumber = (leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) ~/ dashLength;
+    int partNumber =
+        (leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) ~/ dashLength;
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var leftSpacing =
-        ((leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var leftSpacing = ((leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) -
+            (partNumber / 2 * dashLength)) /
+        (partNumber / 2);
     double distance = -bottomLeftCorner / 2;
     while (distance < leftHeight + topLeftCorner / 2) {
       double target = 0;
@@ -235,85 +285,143 @@ class DashedBorder extends Border {
       }
 
       if (distance.isNegative && !target.isNegative) {
-        canvas.drawPath(metric.extractPath(distance % metric.length, metric.length), left.toPaint());
+        canvas.drawPath(
+            metric.extractPath(distance % metric.length, metric.length),
+            left.toPaint());
         canvas.drawPath(metric.extractPath(0, target), left.toPaint());
       } else {
-        canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), left.toPaint());
+        canvas.drawPath(
+            metric.extractPath(
+                distance % metric.length, target % metric.length),
+            left.toPaint());
       }
       distance = target + leftSpacing;
     }
     //endregion
 
     //region calculate spacing and draw top border
-    partNumber = (topWidth + topRightCorner / 2 + topLeftCorner / 2) ~/ dashLength;
+    partNumber =
+        (topWidth + topRightCorner / 2 + topLeftCorner / 2) ~/ dashLength;
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var topSpacing =
-        (topWidth + topRightCorner / 2 + topLeftCorner / 2 - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var topSpacing = (topWidth +
+            topRightCorner / 2 +
+            topLeftCorner / 2 -
+            (partNumber / 2 * dashLength)) /
+        (partNumber / 2);
     distance = (leftHeight + topLeftCorner / 2);
 
-    while (distance < (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2) {
+    while (distance <
+        (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2) {
       double target = 0;
       double diff = 0;
       if (distance == (leftHeight + topLeftCorner / 2)) {
-        diff = distance + dashLength / 2 <= (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2
+        diff = distance + dashLength / 2 <=
+                (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2
             ? dashLength / 2
-            : (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2 - distance;
+            : (leftHeight + topWidth) +
+                topLeftCorner +
+                topRightCorner / 2 -
+                distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2
+        diff = distance + dashLength <=
+                (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2
             ? dashLength
-            : (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2 - distance;
+            : (leftHeight + topWidth) +
+                topLeftCorner +
+                topRightCorner / 2 -
+                distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), top.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          top.toPaint());
       distance = target + topSpacing;
     }
 
     //endregion
 
     //region calculate spacing and draw right border
-    partNumber = (rightHeight + topRightCorner / 2 + bottomRightCorner / 2) ~/ dashLength;
+    partNumber = (rightHeight + topRightCorner / 2 + bottomRightCorner / 2) ~/
+        dashLength;
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var rightSpacing =
-        (rightHeight + topRightCorner / 2 + bottomRightCorner / 2 - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    var rightSpacing = (rightHeight +
+            topRightCorner / 2 +
+            bottomRightCorner / 2 -
+            (partNumber / 2 * dashLength)) /
+        (partNumber / 2);
     distance = (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2;
 
-    while (distance < (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2))) {
+    while (distance <
+        (metric.length -
+            bottomWidth -
+            bottomLeftCorner -
+            (bottomRightCorner / 2))) {
       double target = 0;
       double diff = 0;
-      if (distance == (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2) {
-        diff = distance + dashLength / 2 <= (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2))
+      if (distance ==
+          (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2) {
+        diff = distance + dashLength / 2 <=
+                (metric.length -
+                    bottomWidth -
+                    bottomLeftCorner -
+                    (bottomRightCorner / 2))
             ? dashLength / 2
-            : (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2)) - distance;
+            : (metric.length -
+                    bottomWidth -
+                    bottomLeftCorner -
+                    (bottomRightCorner / 2)) -
+                distance;
         target = distance + diff;
       } else {
-        diff = distance + dashLength <= (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2))
+        diff = distance + dashLength <=
+                (metric.length -
+                    bottomWidth -
+                    bottomLeftCorner -
+                    (bottomRightCorner / 2))
             ? dashLength
-            : (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2)) - distance;
+            : (metric.length -
+                    bottomWidth -
+                    bottomLeftCorner -
+                    (bottomRightCorner / 2)) -
+                distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), right.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          right.toPaint());
       distance = target + rightSpacing;
     }
     //endregion
 
     //region calculate spacing and draw bottom border
-    partNumber = (bottomWidth + bottomRightCorner / 2 + bottomLeftCorner / 2) ~/ dashLength;
+    partNumber = (bottomWidth + bottomRightCorner / 2 + bottomLeftCorner / 2) ~/
+        dashLength;
     if (partNumber % 2 == 1) {
       partNumber -= 1;
     }
-    var bottomSpacing =
-        (bottomWidth + bottomRightCorner / 2 + bottomLeftCorner / 2 - (partNumber / 2 * dashLength)) / (partNumber / 2);
-    distance = (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2));
+    var bottomSpacing = (bottomWidth +
+            bottomRightCorner / 2 +
+            bottomLeftCorner / 2 -
+            (partNumber / 2 * dashLength)) /
+        (partNumber / 2);
+    distance = (metric.length -
+        bottomWidth -
+        bottomLeftCorner -
+        (bottomRightCorner / 2));
 
     while (distance < metric.length - bottomLeftCorner / 2) {
       double target = 0;
       double diff = 0;
-      if (distance == (metric.length - bottomWidth - bottomLeftCorner - (bottomRightCorner / 2))) {
+      if (distance ==
+          (metric.length -
+              bottomWidth -
+              bottomLeftCorner -
+              (bottomRightCorner / 2))) {
         diff = distance + dashLength / 2 <= metric.length - bottomLeftCorner / 2
             ? dashLength / 2
             : metric.length - bottomLeftCorner / 2 - distance;
@@ -324,7 +432,9 @@ class DashedBorder extends Border {
             : metric.length - bottomLeftCorner / 2 - distance;
         target = distance + diff;
       }
-      canvas.drawPath(metric.extractPath(distance % metric.length, target % metric.length), bottom.toPaint());
+      canvas.drawPath(
+          metric.extractPath(distance % metric.length, target % metric.length),
+          bottom.toPaint());
       distance = target + bottomSpacing;
     }
   }

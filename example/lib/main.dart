@@ -37,7 +37,9 @@ class MyHomePage extends StatelessWidget {
             Container(
               height: 75,
               decoration: const BoxDecoration(
-                border: DashedBorder.fromBorderSide(dashLength: 10, side: BorderSide(color: Colors.black, width: 1)),
+                border: DashedBorder.fromBorderSide(
+                    dashLength: 10,
+                    side: BorderSide(color: Colors.black, width: 1)),
               ),
               child: const Center(
                 child: Text(
@@ -67,7 +69,9 @@ class MyHomePage extends StatelessWidget {
             Container(
               height: 75,
               decoration: const BoxDecoration(
-                  border: DashedBorder.fromBorderSide(dashLength: 15, side: BorderSide(color: Colors.black, width: 2)),
+                  border: DashedBorder.fromBorderSide(
+                      dashLength: 15,
+                      side: BorderSide(color: Colors.black, width: 2)),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: const Center(
                 child: Text(
