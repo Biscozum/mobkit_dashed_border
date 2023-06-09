@@ -13,3 +13,8 @@
 ## 0.0.4
 
 * Flutter format update.
+
+## 0.0.5
+
+* Added the ability to draw borders only on corners.
+* Strokecap features added for lines.
