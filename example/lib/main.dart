@@ -121,6 +121,26 @@ class MyHomePage extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
+            Container(
+              height: 90,
+              decoration: BoxDecoration(
+                border: DashedBorder.all(
+                  color: Colors.black,
+                  dashLength: 40,
+                  width: 2,
+                  isOnlyCorner: true,
+                  strokeAlign: BorderSide.strokeAlignInside,
+                  strokeCap: StrokeCap.round,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                child: Text(
+                  'Is only corner',
+                ),
+              ),
+            ),
           ],
         ),
       ),

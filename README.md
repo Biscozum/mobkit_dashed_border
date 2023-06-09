@@ -50,9 +50,9 @@ Container(
             dashLength: 15, side: BorderSide(color: Colors.black, width: 2)),
         borderRadius: BorderRadius.all(Radius.circular(10))),
     child: const Center(
-    child: Text(
-        'Rounded same color and width',
-    ),
+        child: Text(
+            'Rounded same color and width',
+        ),
     ),
 ),
 ```
@@ -82,9 +82,9 @@ Container(
     ),
     ),
     child: const Center(
-    child: Text(
-        'Different rounded and color',
-    ),
+        child: Text(
+            'Different rounded and color',
+        ),
     ),
 ),
 ```
@@ -93,5 +93,31 @@ Output of this code:
 <img src="https://raw.githubusercontent.com/Biscozum/mobkit_dashed_border/main/images/type3.png" alt="selectionScroll" />
 
 
+#### This sample shows a border drawn only on the corners.
+Sample code:
+```dart
+   Container(
+    height: 90,
+    decoration: BoxDecoration(
+    border: DashedBorder.all(
+        color: Colors.black,
+        dashLength: 40,
+        width: 2,
+        isOnlyCorner: true,
+        strokeAlign: BorderSide.strokeAlignInside,
+        strokeCap: StrokeCap.round,
+    ),
+    borderRadius: BorderRadius.circular(20),
+    ),
+    child: const Center(
+        child: Text(
+        'Is only corner',
+        ),
+    ),
+),
+```
+Output of this code:
+
+<img src="https://raw.githubusercontent.com/Biscozum/mobkit_dashed_border/main/images/type4.png" alt="selectionScroll" />
 
 
