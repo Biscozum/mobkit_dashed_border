@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Added space length parameter.
+
 ## 0.0.6
 
 * Added topics.

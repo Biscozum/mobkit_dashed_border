@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 /// This class has 4 initialize method like Border class.
 /// You can create different borders or define them all in one place.
 /// [dashLength] is the length of the dashes
+/// [spaceLength] is the length of the spaces. Default value is equal [dashLength]
+/// [spaceRatio] is ratio of space to dash lengths
 class DashedBorder extends Border {
   /// You can define sides for each corner.
   const DashedBorder({
@@ -13,6 +15,8 @@ class DashedBorder extends Border {
     this.isOnlyCorner = false,
     this.strokeCap = StrokeCap.square,
     required this.dashLength,
+    this.spaceRatio,
+    this.spaceLength,
   });
 
   /// You can define same side for all corner.
@@ -21,6 +25,8 @@ class DashedBorder extends Border {
     this.isOnlyCorner = false,
     this.strokeCap = StrokeCap.square,
     required this.dashLength,
+    this.spaceRatio,
+    this.spaceLength,
   }) : super(bottom: side, top: side, left: side, right: side);
 
   /// You can define symetric sides for each direction.
@@ -30,6 +36,8 @@ class DashedBorder extends Border {
     this.isOnlyCorner = false,
     this.strokeCap = StrokeCap.square,
     required this.dashLength,
+    this.spaceRatio,
+    this.spaceLength,
   }) : super(
             bottom: horizontal,
             top: horizontal,
@@ -45,19 +53,26 @@ class DashedBorder extends Border {
     bool isOnlyCorner = false,
     StrokeCap strokeCap = StrokeCap.square,
     required double dashLength,
+    double? spaceRatio,
+    double? spaceLength,
   }) {
     final BorderSide side = BorderSide(
         color: color, width: width, style: style, strokeAlign: strokeAlign);
     return DashedBorder.fromBorderSide(
-        side: side,
-        dashLength: dashLength,
-        isOnlyCorner: isOnlyCorner,
-        strokeCap: strokeCap);
+      side: side,
+      dashLength: dashLength,
+      isOnlyCorner: isOnlyCorner,
+      strokeCap: strokeCap,
+      spaceRatio: spaceRatio,
+      spaceLength: spaceLength,
+    );
   }
 
   final double dashLength;
   final StrokeCap strokeCap;
   final bool isOnlyCorner;
+  final double? spaceRatio;
+  final double? spaceLength;
 
   @override
   void paint(
@@ -67,6 +82,7 @@ class DashedBorder extends Border {
     BoxShape shape = BoxShape.rectangle,
     BorderRadius? borderRadius,
   }) {
+    assert(spaceRatio == null || spaceLength == null);
     if (borderRadius != null) {
       Path path = Path()..addRRect(borderRadius.toRRect(rect));
       _drawRadiusPath(canvas, path, rect, borderRadius);
@@ -85,14 +101,11 @@ class DashedBorder extends Border {
     var rightHeight = rect.height;
     var topWidth = rect.width;
     var bottomWidth = rect.width;
-
+    var space = spaceLength ?? ((spaceRatio ?? 1.0) * dashLength);
     //region calculate spacing and draw top border
-    int partNumber = (topWidth) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
-    var topSpacing =
-        (topWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    int partNumber = (topWidth) ~/ (dashLength + space);
+
+    var topSpacing = (topWidth - (partNumber * dashLength)) / (partNumber);
     double distance = 0;
 
     while (distance < (topWidth)) {
@@ -121,12 +134,8 @@ class DashedBorder extends Border {
     //endregion
 
     //region calculate spacing and draw right border
-    partNumber = (rightHeight) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
-    var rightSpacing =
-        (rightHeight - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    partNumber = (rightHeight) ~/ (dashLength + space);
+    var rightSpacing = (rightHeight - (partNumber * dashLength)) / (partNumber);
     distance = (topWidth);
 
     while (distance < (metric.length - bottomWidth - leftHeight)) {
@@ -158,12 +167,9 @@ class DashedBorder extends Border {
     //endregion
 
     //region calculate spacing and draw bottom border
-    partNumber = (bottomWidth) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
+    partNumber = (bottomWidth) ~/ (dashLength + space);
     var bottomSpacing =
-        (bottomWidth - (partNumber / 2 * dashLength)) / (partNumber / 2);
+        (bottomWidth - (partNumber * dashLength)) / (partNumber);
     distance = (metric.length - bottomWidth - leftHeight);
 
     while (distance < metric.length - leftHeight) {
@@ -192,12 +198,8 @@ class DashedBorder extends Border {
     //endregion
 
     //region calculate spacing and draw left border
-    partNumber = (leftHeight) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
-    var leftSpacing =
-        ((leftHeight) - (partNumber / 2 * dashLength)) / (partNumber / 2);
+    partNumber = (leftHeight) ~/ (dashLength + space);
+    var leftSpacing = ((leftHeight) - (partNumber * dashLength)) / (partNumber);
     distance = metric.length - leftHeight;
     while (distance < metric.length) {
       double target = 0;
@@ -240,6 +242,7 @@ class DashedBorder extends Border {
     var topLeftCorner = 0.0;
     var topRightCorner = 0.0;
     var bottomRightCorner = 0.0;
+    var space = spaceLength ?? ((spaceRatio ?? 1.0) * dashLength);
 
     //region calculate center point of each corner
     if (borderRadius != null) {
@@ -291,14 +294,12 @@ class DashedBorder extends Border {
     //endregion
 
     //region calculate spacing and draw left border
-    int partNumber =
-        (leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
+    int partNumber = (leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) ~/
+        (dashLength + space);
+
     var leftSpacing = ((leftHeight + bottomLeftCorner / 2 + topLeftCorner / 2) -
-            (partNumber / 2 * dashLength)) /
-        (partNumber / 2);
+            (partNumber * dashLength)) /
+        (partNumber);
     double distance = -bottomLeftCorner / 2;
     while (distance < leftHeight + topLeftCorner / 2) {
       double target = 0;
@@ -336,16 +337,14 @@ class DashedBorder extends Border {
     //endregion
 
     //region calculate spacing and draw top border
-    partNumber =
-        (topWidth + topRightCorner / 2 + topLeftCorner / 2) ~/ dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
+    partNumber = (topWidth + topRightCorner / 2 + topLeftCorner / 2) ~/
+        (dashLength + space);
+
     var topSpacing = (topWidth +
             topRightCorner / 2 +
             topLeftCorner / 2 -
-            (partNumber / 2 * dashLength)) /
-        (partNumber / 2);
+            (partNumber * dashLength)) /
+        (partNumber);
     distance = (leftHeight + topLeftCorner / 2);
 
     while (distance <
@@ -391,15 +390,12 @@ class DashedBorder extends Border {
 
     //region calculate spacing and draw right border
     partNumber = (rightHeight + topRightCorner / 2 + bottomRightCorner / 2) ~/
-        dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
+        (dashLength + space);
     var rightSpacing = (rightHeight +
             topRightCorner / 2 +
             bottomRightCorner / 2 -
-            (partNumber / 2 * dashLength)) /
-        (partNumber / 2);
+            (partNumber * dashLength)) /
+        (partNumber);
     distance = (leftHeight + topWidth) + topLeftCorner + topRightCorner / 2;
 
     while (distance <
@@ -460,15 +456,12 @@ class DashedBorder extends Border {
 
     //region calculate spacing and draw bottom border
     partNumber = (bottomWidth + bottomRightCorner / 2 + bottomLeftCorner / 2) ~/
-        dashLength;
-    if (partNumber % 2 == 1) {
-      partNumber -= 1;
-    }
+        (dashLength + space);
     var bottomSpacing = (bottomWidth +
             bottomRightCorner / 2 +
             bottomLeftCorner / 2 -
-            (partNumber / 2 * dashLength)) /
-        (partNumber / 2);
+            (partNumber * dashLength)) /
+        (partNumber);
     distance = (metric.length -
         bottomWidth -
         bottomLeftCorner -
