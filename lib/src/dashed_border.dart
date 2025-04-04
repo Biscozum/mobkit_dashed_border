@@ -83,6 +83,12 @@ class DashedBorder extends Border {
     BorderRadius? borderRadius,
   }) {
     assert(spaceRatio == null || spaceLength == null);
+    rect = Rect.fromLTRB(
+      rect.left - (left.color.a == 1 ? 0 : left.strokeOffset / 2),
+      rect.top - (top.color.a == 1 ? 0 : top.strokeOffset / 2),
+      rect.right + (right.color.a == 1 ? 0 : right.strokeOffset / 2),
+      rect.bottom + (bottom.color.a == 1 ? 0 : bottom.strokeOffset / 2),
+    );
     if (borderRadius != null) {
       Path path = Path()..addRRect(borderRadius.toRRect(rect));
       _drawRadiusPath(canvas, path, rect, borderRadius);

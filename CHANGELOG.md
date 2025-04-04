@@ -1,3 +1,7 @@
+## 0.0.8
+
+* Stroke Align Fixed.
+
 ## 0.0.7
 
 * Added space length parameter.
